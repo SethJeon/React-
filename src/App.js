@@ -44,6 +44,20 @@ function moveToCompleted(
   }
 }
 
+function cancelCompleted(
+  id,
+  completedTodos,
+  setCompletedTodos,
+  todos,
+  setTodos
+) {
+  const todoToCancel = completedTodos.find((todo) => todo.id === id);
+  if (todoToCancel) {
+    setTodos([...todos, todoToCancel]);
+    setCompletedTodos(completedTodos.filter((todo) => todo.id !== id));
+  }
+}
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [completedTodos, setCompletedTodos] = useState([]);
@@ -116,6 +130,19 @@ function App() {
             <span style={{ textDecoration: "line-through" }}>
               {todo.title}: {todo.body}
             </span>
+            <button
+              onClick={() =>
+                cancelCompleted(
+                  todo.id,
+                  completedTodos,
+                  setCompletedTodos,
+                  todos,
+                  setTodos
+                )
+              }
+            >
+              Cancel
+            </button>{" "}
           </li>
         ))}
       </ul>
